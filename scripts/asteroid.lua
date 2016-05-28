@@ -1,12 +1,15 @@
 local Asteroid = Class {
 	__includes = Transform,
-	radius = 10
+	radius = 10,
+	maxSpeed = 2
 }
 
 function Asteroid:init()
 	-- TODO generate asteroid
 	local x = love.math.random(-Game.w/2, Game.w/2)
 	local y = love.math.random(-Game.h/2, Game.h/2)
+
+	Transform.init(self, x, y, self.radius * 2, self.radius * 2)
 
 	self.verts = {}
 	local numVerts = 20
@@ -20,7 +23,9 @@ function Asteroid:init()
 	self.r = 0
 	self.angularVelocity = love.math.random() * 6 - 3
 
-	Transform.init(self, x, y, self.radius * 2, self.radius * 2)
+	local vx = love.math.random() * self.maxSpeed * 2 - self.maxSpeed
+	local vy = love.math.random() * self.maxSpeed * 2 - self.maxSpeed
+	self:applyForce(vx, vy)
 end
 
 function Asteroid:update(dt)
