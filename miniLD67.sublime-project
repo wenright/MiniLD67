@@ -4,5 +4,13 @@
 		{
 			"path": "."
 		}
-	]
+	],
+
+	"build_systems":
+    [
+        {
+            "name": "Love",
+            "shell_cmd": "love ${project_path}"
+        }
+    ]
 }
