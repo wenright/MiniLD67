@@ -3,8 +3,8 @@ local Game = {}
 function Game:enter()
 	Game.objects = EntitySystem()
 
-	Game.objects:add(Player())
-	Game.objects:add(Ball())
+	Game.player = Game.objects:add(Player())
+	Game.ball = Game.objects:add(Ball(Game.player.x, Game.player.y, Game.player.r))
 
 	-- TODO add asteroids
 end
@@ -14,7 +14,9 @@ function Game:update(dt)
 end
 
 function Game:draw()
+	Camera:attach()
 	Game.objects:draw(dt)
+	Camera:detach()
 end
 
 return Game

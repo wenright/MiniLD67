@@ -1,10 +1,11 @@
 Gamestate = require 'lib.hump.gamestate'
 Class = require 'lib.hump.class'
 Timer = require 'lib.hump.timer'
-Camera = require 'lib.hump.camera'
+Camera = require 'lib.hump.camera'(0, 0)
 Gamestate = require 'lib.hump.gamestate'
 
 EntitySystem = require 'scripts.entitysystem'
+Transform = require 'scripts.transform'
 Player = require 'scripts.player'
 Asteroid = require 'scripts.asteroid'
 Ball = require 'scripts.ball'
