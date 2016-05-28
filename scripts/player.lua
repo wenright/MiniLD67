@@ -44,6 +44,8 @@ function Player:collide()
 	-- Check for collision with ball
 
 	if pointInPolygon({Game.ball.x, Game.ball.y}, self.worldVerts) then
+		Instantiate(Particles(self.x, self.y))
+
 		Game.objects:remove(self.paddle)
 		Game.objects:remove(self)
 	end

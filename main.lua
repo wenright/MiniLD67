@@ -12,6 +12,9 @@ Paddle = require 'scripts.paddle'
 Asteroid = require 'scripts.asteroid'
 Ball = require 'scripts.ball'
 
+Particles = require 'scripts.particles'
+Particle = require 'scripts.particle'
+
 Game = require 'states.game'
 
 require 'scripts.collisions'
@@ -21,8 +24,6 @@ function love.load()
 
 	Gamestate.registerEvents()
 	Gamestate.switch(Game)
-
-	love.graphics.setPointSize(4)
 end
 
 function love.draw()

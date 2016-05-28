@@ -1,7 +1,8 @@
-local EntitySystem = Class {
-	init = function(self) end,
-	pool = {}
-}
+local EntitySystem = Class {}
+
+function EntitySystem:init()
+	self.pool = {}
+end
 
 function EntitySystem:add(e)
 	table.insert(self.pool, e)
@@ -23,7 +24,9 @@ function EntitySystem:remove(e)
 end
 
 function EntitySystem:loop(func, ...)
-	for key, entity in pairs(self.pool) do entity[func](entity, ...) end
+	for key, entity in pairs(self.pool) do
+		if entity[func] then entity[func](entity, ...) end
+	end
 end
 
 function EntitySystem:update(dt)

@@ -54,6 +54,8 @@ function Asteroid:collide()
 
 		-- TODO add to score
 
+		Instantiate(Particles(self.x, self.y))
+
 		Game.objects:remove(self)
 	end
 end
