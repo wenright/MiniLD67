@@ -24,7 +24,7 @@ function Asteroid:init(x, y, radius)
 	Transform.init(self, x, y, self.radius * 2, self.radius * 2)
 
 	self.r = 0
-	self.angularVelocity = love.math.random() * 6 - 3
+	self.angularVelocity = love.math.random() * 8 - 4
 
 	local vx = love.math.random() * self.maxSpeed * 2 - self.maxSpeed
 	local vy = love.math.random() * self.maxSpeed * 2 - self.maxSpeed
@@ -49,6 +49,20 @@ function Asteroid:collide()
 		if self.radius > 10 then
 			Instantiate(Asteroid(self.x, self.y, self.radius / 2))
 			Instantiate(Asteroid(self.x, self.y, self.radius / 2))
+		else
+			-- If the last one has been destroyed, end this game/level
+			local count = 0
+			for k, obj in pairs(Game.objects) do
+				if obj.type == 'Asteroid' then
+					count = count + 1
+				end
+			end
+
+			print('left: ' .. count)
+
+			if count == 0 then
+				print('Game over')
+			end
 		end
 
 		Game.ball:reflect(self.r - math.pi/2)

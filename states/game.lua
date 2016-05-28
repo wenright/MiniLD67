@@ -9,7 +9,7 @@ function Game:enter()
 	Game.ball = Instantiate(Ball(Game.player.x, Game.player.y - 100, Game.player.r))
 
 	-- Spawn some asteroids
-	for i = 1, 5 do
+	for i = 1, 1 do
 		Instantiate(Asteroid())
 	end
 
@@ -17,8 +17,9 @@ function Game:enter()
 end
 
 function Game:update(dt)
-	Game.objects:update(dt)
 	Game.objects:collide()
+	
+	Game.objects:update(dt)
 end
 
 function Game:draw()
