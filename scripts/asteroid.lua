@@ -1,6 +1,6 @@
 local Asteroid = Class {
 	__includes = Transform,
-	radius = 10,
+	maxRadius = 20,
 	maxSpeed = 2
 }
 
@@ -8,6 +8,8 @@ function Asteroid:init()
 	-- TODO generate asteroid
 	local x = love.math.random(-Game.w/2, Game.w/2)
 	local y = love.math.random(-Game.h/2, Game.h/2)
+
+	self.radius = self.maxRadius
 
 	Transform.init(self, x, y, self.radius * 2, self.radius * 2)
 
@@ -39,6 +41,9 @@ function Asteroid:draw()
 
 	love.graphics.translate(self.x, self.y)
 	love.graphics.rotate(self.r)
+
+	love.graphics.setColor(0, 0, 0)
+	love.graphics.polygon('fill', self.verts)
 
 	love.graphics.setColor(255, 255, 255)
 

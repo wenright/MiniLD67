@@ -17,6 +17,8 @@ function love.load()
 
 	Gamestate.registerEvents()
 	Gamestate.switch(Game)
+
+	love.graphics.setPointSize(4)
 end
 
 function love.draw()

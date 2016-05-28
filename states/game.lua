@@ -12,8 +12,6 @@ function Game:enter()
 	for i = 1, 5 do
 		Instantiate(Asteroid())
 	end
-
-	-- TODO add asteroids
 end
 
 function Game:update(dt)

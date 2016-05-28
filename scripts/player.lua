@@ -37,8 +37,16 @@ function Player:draw()
 	love.graphics.translate(self.x, self.y)
 	love.graphics.rotate(self.r + math.pi / 2)
 
+	love.graphics.setColor(0, 0, 0)
+	love.graphics.polygon('fill', self.verts)
+
 	love.graphics.setColor(255, 255, 255)
+
+	-- Player
 	love.graphics.polygon('line', self.verts)
+
+	-- Paddle
+	love.graphics.rectangle('fill', -25, -40, 50, 5, 2)
 
 	love.graphics.pop()
 end
