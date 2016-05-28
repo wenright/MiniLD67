@@ -1,7 +1,7 @@
 local Player = Class {
 	__includes = Transform,
-	rotationSpeed = 4,
-	acceleration = 6,
+	rotationSpeed = 5,
+	acceleration = 7,
 	verts = {
 		0,-25,
 		20, 25,
@@ -37,6 +37,16 @@ function Player:update(dt)
 	end
 
 	self:translateVertices()
+end
+
+function Player:collide()
+	--------------------------------
+	-- Check for collision with ball
+
+	if pointInPolygon({Game.ball.x, Game.ball.y}, self.worldVerts) then
+		Game.objects:remove(self.paddle)
+		Game.objects:remove(self)
+	end
 end
 
 function Player:draw()

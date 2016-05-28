@@ -30,6 +30,10 @@ function EntitySystem:update(dt)
 	self:loop('update', dt)
 end
 
+function EntitySystem:collide()
+	self:loop('collide')
+end
+
 function EntitySystem:draw()
 	self:loop('draw')
 end

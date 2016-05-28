@@ -28,7 +28,9 @@ function Paddle:update(dt)
 	self.y = Game.player.y + sin * self.dist
 
 	Transform.translateVertices(self)
+end
 
+function Paddle:collide()
 	------------------------------------------------
 	-- Check the paddle for collisions with the ball
 	if self.canHit and pointInPolygon({Game.ball.x, Game.ball.y}, self.worldVerts) then

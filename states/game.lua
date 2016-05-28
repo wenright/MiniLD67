@@ -6,7 +6,7 @@ function Game:enter()
 	Game.objects = EntitySystem()
 
 	Game.player = Instantiate(Player())
-	Game.ball = Instantiate(Ball(Game.player.x, Game.player.y, Game.player.r))
+	Game.ball = Instantiate(Ball(Game.player.x, Game.player.y - 100, Game.player.r))
 
 	-- Spawn some asteroids
 	for i = 1, 5 do
@@ -16,6 +16,7 @@ end
 
 function Game:update(dt)
 	Game.objects:update(dt)
+	Game.objects:collide()
 end
 
 function Game:draw()
