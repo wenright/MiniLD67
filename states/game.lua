@@ -1,6 +1,8 @@
 local Game = {}
 
 function Game:enter()
+	Game.w, Game.h = love.graphics.getDimensions()
+
 	Game.objects = EntitySystem()
 
 	Game.player = Game.objects:add(Player())

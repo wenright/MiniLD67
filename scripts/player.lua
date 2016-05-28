@@ -11,7 +11,7 @@ local Player = Class {
 }
 
 function Player:init()
-	Transform.init(self, 0, 0)
+	Transform.init(self, 0, 0, 40, 50)
 
 	self.r = -math.pi/2
 end
