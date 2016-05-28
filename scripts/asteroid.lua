@@ -1,5 +1,6 @@
 local Asteroid = Class {
 	__includes = Transform,
+	type = 'Asteroid',
 	maxRadius = 20,
 	maxSpeed = 2
 }

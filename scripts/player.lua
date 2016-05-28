@@ -1,5 +1,6 @@
 local Player = Class {
 	__includes = Transform,
+	type = 'Player',
 	rotationSpeed = 5,
 	acceleration = 7,
 	verts = {

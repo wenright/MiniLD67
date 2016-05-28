@@ -1,5 +1,6 @@
 local Paddle = Class {
 	__includes = Transform,
+	type = 'Paddle',
 	verts = {
 		-80, -50,
 		-80, -60,
