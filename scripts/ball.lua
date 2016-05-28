@@ -1,11 +1,12 @@
 local Ball = Class {
-	__includes = Transform
+	__includes = Transform,
+	speed = 4
 }
 
 function Ball:init(x, y, r)
 	Transform.init(self, x, y)
 
-	self:applyForce(math.cos(r) * 100, math.sin(r) * 100)
+	self:applyForce(math.cos(r) * self.speed, math.sin(r) * self.speed)
 end
 
 function Ball:update(dt)
