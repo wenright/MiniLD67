@@ -13,8 +13,6 @@ local Player = Class {
 function Player:init()
 	Transform.init(self, 0, 0, 40, 50)
 
-	self.worldVerts = Class.clone(self.verts)
-
 	self.r = 0
 end
 
@@ -36,23 +34,7 @@ function Player:update(dt)
 		self:applyForce(math.cos(self.r - math.pi/2) * self.acceleration * dt, math.sin(self.r - math.pi/2) * self.acceleration * dt)
 	end
 
-	------------------------------------------------------------
-	-- Update vertices from template into real world coordinates
-
-	-- Just some helpers for trig functions
-	local cos, sin = math.cos(self.r), math.sin(self.r)
-
-	-- Rotate vertices
-	for i=1, #self.worldVerts, 2 do
-		self.worldVerts[i] = self.verts[i] * cos - self.verts[i + 1] * sin
-		self.worldVerts[i + 1] = self.verts[i] * sin + self.verts[i + 1] * cos
-	end
-
-	-- Translate vertices
-	for i=1, #self.worldVerts, 2 do
-		self.worldVerts[i] = self.worldVerts[i] + self.x
-		self.worldVerts[i + 1] = self.worldVerts[i + 1] + self.y
-	end
+	self:translateVertices()
 end
 
 function Player:draw()
@@ -64,6 +46,8 @@ function Player:draw()
 	-- Player
 	love.graphics.polygon('line', self.worldVerts)
 
+	-- TODO move paddle with player
+	-- TODO move paddle to separate file
 	-- Paddle
 	love.graphics.rectangle('fill', -25, -40, 50, 5, 2)
 end

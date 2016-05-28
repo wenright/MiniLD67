@@ -11,8 +11,6 @@ function Asteroid:init()
 
 	self.radius = self.maxRadius
 
-	Transform.init(self, x, y, self.radius * 2, self.radius * 2)
-
 	self.verts = {}
 	local numVerts = 20
 	for i = 1, numVerts, 2 do
@@ -21,6 +19,8 @@ function Asteroid:init()
 		self.verts[i] = math.cos(rotation) * radius
 		self.verts[i + 1] = math.sin(rotation) * radius
 	end
+
+	Transform.init(self, x, y, self.radius * 2, self.radius * 2)
 
 	self.r = 0
 	self.angularVelocity = love.math.random() * 6 - 3
@@ -34,22 +34,17 @@ function Asteroid:update(dt)
 	Transform.update(self, dt)
 
 	self.r = self.r + self.angularVelocity * dt
+
+	self:translateVertices()
 end
 
 function Asteroid:draw()
-	love.graphics.push()
-
-	love.graphics.translate(self.x, self.y)
-	love.graphics.rotate(self.r)
-
 	love.graphics.setColor(0, 0, 0)
-	love.graphics.polygon('fill', self.verts)
+	love.graphics.polygon('fill', self.worldVerts)
 
 	love.graphics.setColor(255, 255, 255)
 
-	love.graphics.polygon('line', self.verts)
-
-	love.graphics.pop()
+	love.graphics.polygon('line', self.worldVerts)
 end
 
 return Asteroid

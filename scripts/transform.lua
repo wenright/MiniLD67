@@ -8,6 +8,10 @@ function Transform:init(x, y, w, h)
 	self.h = h or 1
 
 	self.vx, self.vy = 0, 0
+
+	if self.verts then
+		self.worldVerts = Class.clone(self.verts)
+	end
 end
 
 function Transform:applyForce(dx, dy)
@@ -29,6 +33,26 @@ function Transform:update(dt)
 		self.y = Game.h / 2
 	elseif self.y > Game.h / 2 then
 		self.y = -Game.h / 2
+	end
+end
+
+function Transform:translateVertices()
+	------------------------------------------------------------
+	-- Update vertices from template into real world coordinates
+
+	-- Just some helpers for trig functions
+	local cos, sin = math.cos(self.r), math.sin(self.r)
+
+	-- Rotate vertices
+	for i=1, #self.worldVerts, 2 do
+		self.worldVerts[i] = self.verts[i] * cos - self.verts[i + 1] * sin
+		self.worldVerts[i + 1] = self.verts[i] * sin + self.verts[i + 1] * cos
+	end
+
+	-- Translate vertices
+	for i=1, #self.worldVerts, 2 do
+		self.worldVerts[i] = self.worldVerts[i] + self.x
+		self.worldVerts[i + 1] = self.worldVerts[i + 1] + self.y
 	end
 end
 
