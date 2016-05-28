@@ -56,4 +56,12 @@ function Transform:translateVertices()
 	end
 end
 
+function Transform:reflect(r)
+	local v = Vector.new(self.vx, self.vy)
+	local n = Vector.new(math.cos(r), math.sin(r))
+	local u = ((v * n) / (n * n)) * n
+	local w = v - u
+	self.vx, self.vy = (w - u):unpack()
+end
+
 return Transform

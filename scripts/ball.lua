@@ -4,7 +4,7 @@ local Ball = Class {
 }
 
 function Ball:init(x, y, r)
-	-- TODO this shouldn't be offset like this
+	-- TODO this shouldn't need to be offset like this
 	r = r - math.pi/2
 
 	Transform.init(self, x, y)

@@ -14,6 +14,8 @@ function Player:init()
 	Transform.init(self, 0, 0, 40, 50)
 
 	self.r = 0
+
+	self.paddle = Instantiate(Paddle())
 end
 
 function Player:update(dt)
@@ -43,13 +45,7 @@ function Player:draw()
 
 	love.graphics.setColor(255, 255, 255)
 
-	-- Player
 	love.graphics.polygon('line', self.worldVerts)
-
-	-- TODO move paddle with player
-	-- TODO move paddle to separate file
-	-- Paddle
-	love.graphics.rectangle('fill', -25, -40, 50, 5, 2)
 end
 
 return Player

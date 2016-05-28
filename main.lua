@@ -3,14 +3,18 @@ Class = require 'lib.hump.class'
 Timer = require 'lib.hump.timer'
 Camera = require 'lib.hump.camera'(0, 0)
 Gamestate = require 'lib.hump.gamestate'
+Vector = require 'lib.hump.vector'
 
 EntitySystem = require 'scripts.entitysystem'
 Transform = require 'scripts.transform'
 Player = require 'scripts.player'
+Paddle = require 'scripts.paddle'
 Asteroid = require 'scripts.asteroid'
 Ball = require 'scripts.ball'
 
 Game = require 'states.game'
+
+require 'scripts.collisions'
 
 function love.load()
 	io.stdout:setvbuf('no')
@@ -24,6 +28,10 @@ end
 function love.draw()
 	love.graphics.setColor(255, 0, 0)
 	love.graphics.print(love.timer.getFPS())
+end
+
+function love.update(dt)
+	Timer.update(dt)
 end
 
 function love.keypressed(key)
