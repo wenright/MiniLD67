@@ -11,6 +11,7 @@ Player = require 'scripts.player'
 Paddle = require 'scripts.paddle'
 Asteroid = require 'scripts.asteroid'
 Ball = require 'scripts.ball'
+Powerup = require 'scripts.powerup'
 
 Particles = require 'scripts.particles'
 Particle = require 'scripts.particle'

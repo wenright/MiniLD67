@@ -22,7 +22,7 @@ end
 
 function Ball:draw()
 	love.graphics.setPointSize(4)
-	
+
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.points(self.x, self.y)
 end
