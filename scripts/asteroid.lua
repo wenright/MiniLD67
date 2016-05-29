@@ -1,8 +1,8 @@
 local Asteroid = Class {
 	__includes = Transform,
 	type = 'Asteroid',
-	maxRadius = 20,
-	maxSpeed = 200
+	maxRadius = 30,
+	maxSpeed = 100
 }
 
 function Asteroid:init(x, y, radius)
@@ -45,7 +45,7 @@ function Asteroid:collide()
 	-- Check for collision with ball
 	for k, ball in pairs(Game.balls.pool) do
 		if self.canCollide and self.worldVerts:contains(ball.x, ball.y) then
-			if self.radius > 10 then
+			if self.radius == self.maxRadius then
 				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
 				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
 			else

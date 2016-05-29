@@ -1,6 +1,6 @@
 local Particle = Class {
 	__includes = Transform,
-	speed = 5
+	speed = 500
 }
 
 function Particle:init(x, y)

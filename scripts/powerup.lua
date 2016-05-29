@@ -8,6 +8,9 @@ function Powerup:init(x, y)
 
 	-- TODO pick random powerup type
 	self.kind = love.math.random(1, 1)
+
+	self.radius = 1
+	Timer.tween(0.4, self, {radius = 50}, 'in-out-quad')
 end
 
 function Powerup:collide()
@@ -27,7 +30,7 @@ end
 function Powerup:draw()
 	-- TODO flashy animations and stuff
 	love.graphics.setColor(255, 255, 255)
-	love.graphics.circle('line', self.x, self.y, 50)
+	love.graphics.circle('line', self.x, self.y, self.radius)
 end
 
 return Powerup
