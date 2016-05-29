@@ -51,17 +51,7 @@ function Asteroid:collide()
 				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
 			else
 				-- If the last one has been destroyed, end this game/level
-				-- TODO move to new function
-				local count = 0
-				for k, obj in pairs(Game.objects.pool) do
-					if obj.type == 'Asteroid' then
-						count = count + 1
-					end
-				end
-
-				if count == 1 then
-					print('Game over')
-				end
+				Game.checkForWin()
 			end
 
 			if love.math.random() > 0.9 then

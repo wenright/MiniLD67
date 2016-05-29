@@ -34,6 +34,8 @@ function Player:init()
 	end)
 
 	self.paddle = Instantiate(Paddle())
+
+	self.fire = newFire()
 end
 
 function Player:update(dt)
@@ -57,6 +59,10 @@ function Player:update(dt)
 
 	if love.keyboard.isDown('w', 'up') then
 		self:applyForce(math.cos(self.r - math.pi/2) * self.acceleration * dt, math.sin(self.r - math.pi/2) * self.acceleration * dt)
+
+		self.fire = newFire()
+	else
+		self.fire = nil
 	end
 end
 
@@ -75,7 +81,34 @@ function Player:collide()
 	end
 end
 
+function newFire()
+	local fire = {-10, 0}
+	local num_verts = 10
+	for i = 1, num_verts, 2 do
+		table.insert(fire, -5 + (10 / num_verts) * i)
+		table.insert(fire, love.math.random(5, 25))
+	end
+
+	table.insert(fire, 10)
+	table.insert(fire, 0)
+
+	return fire
+end
+
 function Player:draw()
+	-- Draw some fire if the player moved this frame
+	if self.fire then
+		love.graphics.push()
+
+		love.graphics.translate(self.x, self.y)
+		love.graphics.rotate(self.r)
+
+		love.graphics.setColor(255, 255, 255)
+		love.graphics.polygon('line', self.fire)
+
+		love.graphics.pop()
+	end
+
 	love.graphics.setColor(0, 0, 0)
 	self.worldVerts:draw('fill')
 
