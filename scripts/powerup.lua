@@ -13,7 +13,16 @@ function Powerup:init(x, y)
 
 	self.radius = 1
 
-	Timer.tween(0.4, self, {radius = 50}, 'in-out-quad')
+	Timer.tween(0.4, self, {radius = 55}, 'in-out-quad', function()
+		local grow, shrink
+		grow = function()
+			Timer.tween(1.5, self, {radius = 50}, 'in-out-quad', shrink)
+		end
+		shrink = function()
+			Timer.tween(1.5, self, {radius = 55}, 'in-out-quad', grow)
+		end
+		grow()
+	end)
 end
 
 function Powerup:collide()

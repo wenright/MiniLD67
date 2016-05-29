@@ -47,11 +47,13 @@ end
 function Player:collide()
 	--------------------------------
 	-- Check for collision with ball
-	if false --[[TODO]] then
-		Instantiate(Particles(self.x, self.y))
+	for k, ball in pairs(Game.balls.pool) do
+		if self.worldVerts:contains(ball.x, ball.y) then
+			Instantiate(Particles(self.x, self.y))
 
-		Game.objects:remove(self.paddle)
-		Game.objects:remove(self)
+			Game.objects:remove(self.paddle)
+			Game.objects:remove(self)
+		end
 	end
 end
 
