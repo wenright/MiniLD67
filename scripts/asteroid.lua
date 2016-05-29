@@ -17,8 +17,8 @@ function Asteroid:init(x, y, radius)
 	for i = 1, numVerts, 2 do
 		local radius = self.radius * (love.math.random() + 0.5)
 		local rotation = i * math.pi / (numVerts / 2)
-		self.verts[i] = math.cos(rotation) * radius
-		self.verts[i + 1] = math.sin(rotation) * radius
+		self.verts[i] = x + math.cos(rotation) * radius
+		self.verts[i + 1] = y + math.sin(rotation) * radius
 	end
 
 	Transform.init(self, x, y, self.radius * 2, self.radius * 2)
@@ -43,37 +43,39 @@ end
 function Asteroid:collide()
 	--------------------------------
 	-- Check for collision with ball
-	if self.canCollide and false --[[TODO]] then
-		if self.radius > 10 then
-			Instantiate(Asteroid(self.x, self.y, self.radius / 2))
-			Instantiate(Asteroid(self.x, self.y, self.radius / 2))
-		else
-			-- If the last one has been destroyed, end this game/level
-			local count = 0
-			for k, obj in pairs(Game.objects) do
-				if obj.type == 'Asteroid' then
-					count = count + 1
+	for k, ball in pairs(Game.balls.pool) do
+		if self.canCollide and self.worldVerts:contains(ball.x, ball.y) then
+			if self.radius > 10 then
+				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
+				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
+			else
+				-- If the last one has been destroyed, end this game/level
+				local count = 0
+				for k, obj in pairs(Game.objects.pool) do
+					if obj.type == 'Asteroid' then
+						count = count + 1
+					end
+				end
+
+				print('left: ' .. count)
+
+				if count == 0 then
+					print('Game over')
 				end
 			end
 
-			print('left: ' .. count)
-
-			if count == 0 then
-				print('Game over')
+			if love.math.random() > 0 then
+				Instantiate(Powerup(self.x, self.y))
 			end
+
+			ball:reflect(self.r - math.pi/2)
+
+			-- TODO add to score
+
+			Instantiate(Particles(self.x, self.y))
+
+			Game.objects:remove(self)
 		end
-
-		if love.math.random() > 0 then
-			Instantiate(Powerup(self.x, self.y))
-		end
-
-		Game.ball:reflect(self.r - math.pi/2)
-
-		-- TODO add to score
-
-		Instantiate(Particles(self.x, self.y))
-
-		Game.objects:remove(self)
 	end
 end
 
@@ -84,6 +86,8 @@ function Asteroid:draw()
 	love.graphics.setColor(255, 255, 255)
 
 	love.graphics.polygon('line', self.worldVerts:unpack())
+
+	love.graphics.points(self.x, self.y)
 end
 
 return Asteroid

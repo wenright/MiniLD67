@@ -7,7 +7,6 @@ function Paddle:init()
 	Transform.init(self, 0, 0, 80, 20)
 
 	self.shape = Physics.rectangle(self.x, self.y, self.w, self.h)
-	print(self.shape)
 
 	self.dist = -50
 	self.r = 0
@@ -29,13 +28,17 @@ end
 function Paddle:collide()
 	------------------------------------------------
 	-- Check the paddle for collisions with the ball
-	if self.canHit and false --[[TODO]] then
-		Game.ball:reflect(self.r - math.pi/2)
+	for k, ball in pairs(Game.balls.pool) do
+		if self.canHit and self.shape:contains(ball.x, ball.y) then
+			ball:reflect(self.r - math.pi/2)
 
-		self.canHit = false
-		Timer.after(0.2, function()
-			self.canHit = true
-		end)
+			self.canHit = false
+			Timer.after(0.2, function()
+				self.canHit = true
+			end)
+
+			return
+		end
 	end
 end
 

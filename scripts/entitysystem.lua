@@ -30,11 +30,8 @@ function EntitySystem:loop(func, ...)
 end
 
 function EntitySystem:update(dt)
-	self:loop('update', dt)
-end
-
-function EntitySystem:collide()
 	self:loop('collide')
+	self:loop('update', dt)
 end
 
 function EntitySystem:draw()

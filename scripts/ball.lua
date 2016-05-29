@@ -1,5 +1,6 @@
 local Ball = Class {
 	__includes = Transform,
+	type = 'Ball',
 	speed = 4
 }
 

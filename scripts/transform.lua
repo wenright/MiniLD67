@@ -37,6 +37,8 @@ function Transform:update(dt)
 		elseif y1 > Game.h / 2 then
 			self.worldVerts:move(0, -Game.h)
 		end
+
+		self.x, self.y = self.worldVerts.centroid.x, self.worldVerts.centroid.y
 	else
 		self.x = self.x + self.vx
 		self.y = self.y + self.vy
