@@ -66,7 +66,7 @@ function Transform:reflect(r)
 
 	if self.type == 'Ball' then
 		self.size = 10
-		Timer.tween(1, self, {size = 4}, 'in-bounce')
+		Timer.tween(1, self, {size = 4}, 'in-bounce', function() self.size = 4 end)
 	end
 end
 

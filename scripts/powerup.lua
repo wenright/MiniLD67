@@ -29,7 +29,6 @@ function Powerup:collide()
 	if not self.used and dist(Game.player.x, Game.player.y, self.x, self.y) < 100 then
 		if self.kind == 1 then
 			Instantiate(Ball(self.x, self.y, love.math.random() * math.pi * 4 - math.pi * 2))
-			Instantiate(Ball(self.x, self.y, love.math.random() * math.pi * 4 - math.pi * 2))
 		elseif self.kind == 2 then
 			-- Score bonus? bigger paddle?
 		end
@@ -46,6 +45,10 @@ function Powerup:draw()
 	-- TODO flashy animations and stuff
 	love.graphics.setColor(self.color)
 	love.graphics.circle('line', self.x, self.y, self.radius)
+
+	if self.kind == 1 then
+		love.graphics.circle('fill', self.x, self.y, self.radius / 10)
+	end
 end
 
 return Powerup
