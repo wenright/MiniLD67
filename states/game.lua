@@ -12,13 +12,11 @@ function Game:enter()
 	for i = 1, 1 do
 		Instantiate(Asteroid())
 	end
-
-	Instantiate(Particles(0, 0))
 end
 
 function Game:update(dt)
 	Game.objects:collide()
-	
+
 	Game.objects:update(dt)
 end
 

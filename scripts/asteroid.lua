@@ -38,14 +38,12 @@ function Asteroid:update(dt)
 	Transform.update(self, dt)
 
 	self.r = self.r + self.angularVelocity * dt
-
-	self:translateVertices()
 end
 
 function Asteroid:collide()
 	--------------------------------
 	-- Check for collision with ball
-	if self.canCollide and pointInPolygon({Game.ball.x, Game.ball.y}, self.worldVerts) then
+	if self.canCollide and false --[[TODO]] then
 		if self.radius > 10 then
 			Instantiate(Asteroid(self.x, self.y, self.radius / 2))
 			Instantiate(Asteroid(self.x, self.y, self.radius / 2))
@@ -81,11 +79,11 @@ end
 
 function Asteroid:draw()
 	love.graphics.setColor(0, 0, 0)
-	love.graphics.polygon('fill', self.worldVerts)
+	love.graphics.polygon('fill', self.worldVerts:unpack())
 
 	love.graphics.setColor(255, 255, 255)
 
-	love.graphics.polygon('line', self.worldVerts)
+	love.graphics.polygon('line', self.worldVerts:unpack())
 end
 
 return Asteroid

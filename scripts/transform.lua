@@ -10,7 +10,7 @@ function Transform:init(x, y, w, h)
 	self.vx, self.vy = 0, 0
 
 	if self.verts then
-		self.worldVerts = Class.clone(self.verts)
+		self.worldVerts = Polygon(unpack(self.verts))
 	end
 end
 
@@ -20,39 +20,38 @@ function Transform:applyForce(dx, dy)
 end
 
 function Transform:update(dt)
-	self.x = self.x + self.vx
-	self.y = self.y + self.vy
+	if self.worldVerts then
+		self.worldVerts:move(self.vx, self.vy)
 
-	if self.x + self.w < -Game.w / 2 then
-		self.x = Game.w / 2
-	elseif self.x > Game.w / 2 then
-		self.x = -Game.w / 2
-	end
+		local x1, y1, x2, y2 = self.worldVerts:bbox()
 
-	if self.y + self.h < -Game.h / 2 then
-		self.y = Game.h / 2
-	elseif self.y > Game.h / 2 then
-		self.y = -Game.h / 2
-	end
-end
+		-- TODO move accorss a little less so less teleporting
+		if x2 < -Game.w / 2 then
+			self.worldVerts:move(Game.w, 0)
+		elseif x1 > Game.w / 2 then
+			self.worldVerts:move(-Game.w, 0)
+		end
 
-function Transform:translateVertices()
-	------------------------------------------------------------
-	-- Update vertices from template into real world coordinates
+		if y2 < -Game.h / 2 then
+			self.worldVerts:move(0, Game.h)
+		elseif y1 > Game.h / 2 then
+			self.worldVerts:move(0, -Game.h)
+		end
+	else
+		self.x = self.x + self.vx
+		self.y = self.y + self.vy
 
-	-- Just some helpers for trig functions
-	local cos, sin = math.cos(self.r), math.sin(self.r)
+		if self.x + self.w < -Game.w / 2 then
+			self.x = Game.w / 2
+		elseif self.x > Game.w / 2 then
+			self.x = -Game.w / 2
+		end
 
-	-- Rotate vertices
-	for i=1, #self.worldVerts, 2 do
-		self.worldVerts[i] = self.verts[i] * cos - self.verts[i + 1] * sin
-		self.worldVerts[i + 1] = self.verts[i] * sin + self.verts[i + 1] * cos
-	end
-
-	-- Translate vertices
-	for i=1, #self.worldVerts, 2 do
-		self.worldVerts[i] = self.worldVerts[i] + self.x
-		self.worldVerts[i + 1] = self.worldVerts[i + 1] + self.y
+		if self.y + self.h < -Game.h / 2 then
+			self.y = Game.h / 2
+		elseif self.y > Game.h / 2 then
+			self.y = -Game.h / 2
+		end
 	end
 end
 

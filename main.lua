@@ -5,6 +5,8 @@ Camera = require 'lib.hump.camera'(0, 0)
 Gamestate = require 'lib.hump.gamestate'
 Vector = require 'lib.hump.vector'
 
+Polygon = require 'lib.HC.polygon'
+
 EntitySystem = require 'scripts.entitysystem'
 Transform = require 'scripts.transform'
 Player = require 'scripts.player'
@@ -17,8 +19,6 @@ Particles = require 'scripts.particles'
 Particle = require 'scripts.particle'
 
 Game = require 'states.game'
-
-require 'scripts.collisions'
 
 function love.load()
 	io.stdout:setvbuf('no')
@@ -40,4 +40,8 @@ function love.keypressed(key)
 	if key == 'escape' then
 		love.event.quit()
 	end
+end
+
+function dist(x1, y1, x2, y2)
+	return math.sqrt((x2 - x1)^2 + (y2 - y1)^2)
 end

@@ -24,27 +24,26 @@ function Player:update(dt)
 	-- Update the position using the player's velocity
 	Transform.update(self, dt)
 
+	self.r = self.worldVerts.r
+
 	-----------------------------------------------------------
 	-- Take input from keyboard and apply a rotation or a force
 	if love.keyboard.isDown('a', 'left') then
-		self.r = self.r - dt * self.rotationSpeed
+		self.worldVerts:rotate(-self.rotationSpeed * dt)
 	end
 	if love.keyboard.isDown('d', 'right') then
-		self.r = self.r + dt * self.rotationSpeed
+		self.worldVerts:rotate(self.rotationSpeed * dt)
 	end
 
 	if love.keyboard.isDown('w', 'up') then
 		self:applyForce(math.cos(self.r - math.pi/2) * self.acceleration * dt, math.sin(self.r - math.pi/2) * self.acceleration * dt)
 	end
-
-	self:translateVertices()
 end
 
 function Player:collide()
 	--------------------------------
 	-- Check for collision with ball
-
-	if pointInPolygon({Game.ball.x, Game.ball.y}, self.worldVerts) then
+	if false --[[TODO]] then
 		Instantiate(Particles(self.x, self.y))
 
 		Game.objects:remove(self.paddle)
@@ -54,11 +53,11 @@ end
 
 function Player:draw()
 	love.graphics.setColor(0, 0, 0)
-	love.graphics.polygon('fill', self.worldVerts)
+	love.graphics.polygon('fill', self.worldVerts:unpack())
 
 	love.graphics.setColor(255, 255, 255)
 
-	love.graphics.polygon('line', self.worldVerts)
+	love.graphics.polygon('line', self.worldVerts:unpack())
 end
 
 return Player

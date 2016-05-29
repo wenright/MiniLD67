@@ -27,14 +27,12 @@ function Paddle:update(dt)
 
 	self.x = Game.player.x + cos * self.dist
 	self.y = Game.player.y + sin * self.dist
-
-	Transform.translateVertices(self)
 end
 
 function Paddle:collide()
 	------------------------------------------------
 	-- Check the paddle for collisions with the ball
-	if self.canHit and pointInPolygon({Game.ball.x, Game.ball.y}, self.worldVerts) then
+	if self.canHit and false --[[TODO]] then
 		Game.ball:reflect(self.r - math.pi/2)
 
 		self.canHit = false
@@ -46,7 +44,7 @@ end
 
 function Paddle:draw()
 	love.graphics.setColor(255, 255, 255)
-	love.graphics.polygon('fill', self.worldVerts)
+	love.graphics.polygon('fill', self.worldVerts:unpack())
 end
 
 return Paddle
