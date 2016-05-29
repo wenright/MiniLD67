@@ -21,6 +21,8 @@ Particle = require 'scripts.particle'
 
 Game = require 'states.game'
 
+love.graphics.setNewFont('fonts/kenpixel_square.ttf', 32)
+
 function love.load()
 	io.stdout:setvbuf('no')
 

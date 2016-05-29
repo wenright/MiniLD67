@@ -5,10 +5,14 @@ function Game:enter()
 
 	Game.level = 1
 	Game.lives = 3
+	Game.score = 0
+	Game.scoreMultiplier = 1
 
 	Game.world = Physics.new(250)
 
 	Game.spawnPlayer()
+
+	Instantiate(Powerup())
 end
 
 function Game:update(dt)
@@ -24,13 +28,17 @@ function Game:draw()
 
 	Camera:detach()
 
-	love.graphics.print('Level ' .. Game.level)
+	if Game.scoreMultiplier > 1 then
+		love.graphics.print(Game.score .. ' x' .. Game.scoreMultiplier, 10)
+	else
+		love.graphics.print(Game.score, 10)
+	end
 
 	for i = 1, Game.lives do
 		love.graphics.push()
 
 		love.graphics.scale(0.5)
-		love.graphics.translate(love.graphics.getWidth() * 2 - 50 * i, 50)
+		love.graphics.translate(50 * i, 150)
 
 		love.graphics.polygon('line', Player.verts)
 

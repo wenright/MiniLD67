@@ -54,13 +54,14 @@ function Asteroid:collide()
 				Game.checkForWin()
 			end
 
-			if love.math.random() > 0.9 then
+			if love.math.random() > 0.6 then
 				Instantiate(Powerup(self.x, self.y))
 			end
 
 			shape.parent:reflect(self.r - math.pi/2)
 
 			-- TODO add to score
+			Game.score = Game.score + math.floor(1000 * (1 / self.radius)) * Game.scoreMultiplier
 
 			Instantiate(Particles(self.x, self.y))
 
