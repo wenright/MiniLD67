@@ -72,8 +72,8 @@ function Player:collide()
 	--------------------------------
 	-- Check for collision with ball
 	if not self.invincible then
-		for k, ball in pairs(Game.balls.pool) do
-			if self.worldVerts:contains(ball.x, ball.y) then
+		for shape, delta in pairs(Game.world:collisions(self.worldVerts)) do
+			if shape.parent.type == 'Ball' or shape.parent.type == 'Asteroid' then
 				Instantiate(Particles(self.x, self.y))
 
 				local sound = self.fireSound
