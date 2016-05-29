@@ -14,6 +14,8 @@ end
 function Game:draw()
 	Camera:attach()
 
+	Game.starfield:draw()
+
 	Game.objects:draw(dt)
 	Game.balls:draw(dt)
 
@@ -81,6 +83,8 @@ function Game.restart()
 end
 
 function Game.spawnPlayer()
+	Game.starfield = Starfield()
+
 	Game.objects = EntitySystem()
 	Game.balls = EntitySystem()
 	

@@ -16,6 +16,8 @@ Asteroid = require 'scripts.asteroid'
 Ball = require 'scripts.ball'
 Powerup = require 'scripts.powerup'
 
+Starfield = require 'scripts.starfield'
+
 Particles = require 'scripts.particles'
 Particle = require 'scripts.particle'
 
