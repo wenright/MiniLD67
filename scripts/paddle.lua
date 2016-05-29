@@ -39,6 +39,9 @@ function Paddle:collide()
 			ball:applyForce(-ball.vx/2, -ball.vy/2)
 			ball:applyForce(Game.player.vx, Game.player.vy)
 
+			-- By launching player back, we can prevent ball teleporting through paddle
+			Game.player:applyForce(-Game.player.vx, -Game.player.vy)
+
 			self.canHit = false
 			Timer.after(0.2, function()
 				self.canHit = true

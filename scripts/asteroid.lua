@@ -61,7 +61,7 @@ function Asteroid:collide()
 			shape.parent:reflect(self.r - math.pi/2)
 
 			-- TODO add to score
-			Game.score = Game.score + math.floor(1000 * (1 / self.radius)) * Game.scoreMultiplier
+			Game.score = Game.score + math.floor(4000 * (1 / self.radius)) * Game.scoreMultiplier
 
 			Instantiate(Particles(self.x, self.y))
 
