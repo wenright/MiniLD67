@@ -28,11 +28,6 @@ function love.load()
 	Gamestate.switch(Game)
 end
 
-function love.draw()
-	love.graphics.setColor(255, 0, 0)
-	love.graphics.print(love.timer.getFPS())
-end
-
 function love.update(dt)
 	Timer.update(dt)
 end

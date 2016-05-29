@@ -21,7 +21,7 @@ end
 
 function Transform:update(dt)
 	if self.worldVerts then
-		self.worldVerts:move(self.vx, self.vy)
+		self.worldVerts:move(self.vx * dt, self.vy * dt)
 
 		local x1, y1, x2, y2 = self.worldVerts:bbox()
 
@@ -40,8 +40,8 @@ function Transform:update(dt)
 
 		self.x, self.y = self.worldVerts.centroid.x, self.worldVerts.centroid.y
 	else
-		self.x = self.x + self.vx
-		self.y = self.y + self.vy
+		self.x = self.x + self.vx * dt
+		self.y = self.y + self.vy * dt
 
 		if self.x + self.w < -Game.w / 2 then
 			self.x = Game.w / 2

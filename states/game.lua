@@ -11,7 +11,7 @@ function Game:enter()
 	Instantiate(Ball(Game.player.x, Game.player.y - 100, Game.player.r))
 
 	-- Spawn some asteroids
-	for i = 1, 1 do
+	for i = 1, 5 do
 		Instantiate(Asteroid())
 	end
 end

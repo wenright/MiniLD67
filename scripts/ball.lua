@@ -1,7 +1,7 @@
 local Ball = Class {
 	__includes = Transform,
 	type = 'Ball',
-	speed = 4
+	speed = 300
 }
 
 function Ball:init(x, y, r)

@@ -2,7 +2,7 @@ local Asteroid = Class {
 	__includes = Transform,
 	type = 'Asteroid',
 	maxRadius = 20,
-	maxSpeed = 2
+	maxSpeed = 200
 }
 
 function Asteroid:init(x, y, radius)
@@ -62,7 +62,7 @@ function Asteroid:collide()
 				end
 			end
 
-			if love.math.random() > 0 then
+			if love.math.random() > 0.8 then
 				Instantiate(Powerup(self.x, self.y))
 			end
 
@@ -84,8 +84,6 @@ function Asteroid:draw()
 	love.graphics.setColor(255, 255, 255)
 
 	love.graphics.polygon('line', self.worldVerts:unpack())
-
-	love.graphics.points(self.x, self.y)
 end
 
 return Asteroid
