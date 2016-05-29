@@ -35,7 +35,8 @@ function Player:init()
 
 	self.paddle = Instantiate(Paddle())
 
-	self.fire = newFire()
+	self.fireSound = love.audio.newSource('sound/noise1.wav', 'static')
+	self.fire = self:newFire()
 end
 
 function Player:update(dt)
@@ -60,9 +61,10 @@ function Player:update(dt)
 	if love.keyboard.isDown('w', 'up') then
 		self:applyForce(math.cos(self.r - math.pi/2) * self.acceleration * dt, math.sin(self.r - math.pi/2) * self.acceleration * dt)
 
-		self.fire = newFire()
+		self.fire = self:newFire()
 	else
 		self.fire = nil
+		self.fireSound:stop()
 	end
 end
 
@@ -74,6 +76,7 @@ function Player:collide()
 			if self.worldVerts:contains(ball.x, ball.y) then
 				Instantiate(Particles(self.x, self.y))
 
+				local sound = self.fireSound
 				Timer.after(1, function()
 					if Game.lives > 0 then
 						Game.lives = Game.lives - 1
@@ -81,7 +84,14 @@ function Player:collide()
 					else
 						Game.over = true
 					end
+
+					sound:stop()
 				end)
+
+
+				love.audio.newSource('sound/expl1.wav', 'static'):play()
+
+				sound:stop()
 
 				Game.objects:remove(self.paddle)
 				Game.objects:remove(self)
@@ -90,7 +100,7 @@ function Player:collide()
 	end
 end
 
-function newFire()
+function Player:newFire()
 	local fire = {-10, 0}
 	local num_verts = 10
 	for i = 1, num_verts, 2 do
@@ -100,6 +110,12 @@ function newFire()
 
 	table.insert(fire, 10)
 	table.insert(fire, 0)
+
+	-- Play a fire sound
+
+	if not self.fireSound:isPlaying() then
+		self.fireSound:play()
+	end
 
 	return fire
 end
@@ -112,7 +128,7 @@ function Player:draw()
 		love.graphics.translate(self.x, self.y)
 		love.graphics.rotate(self.r)
 
-		love.graphics.setColor(255, 255, 255)
+		love.graphics.setColor(self.color)
 		love.graphics.polygon('line', self.fire)
 
 		love.graphics.pop()

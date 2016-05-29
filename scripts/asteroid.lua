@@ -64,6 +64,10 @@ function Asteroid:collide()
 
 			Instantiate(Particles(self.x, self.y))
 
+			-- Play a random explosion sound
+			local n = love.math.random(1, 3)
+			love.audio.newSource('sound/astr' .. n .. '.wav', 'static'):play()
+
 			Game.objects:remove(self)
 		end
 	end

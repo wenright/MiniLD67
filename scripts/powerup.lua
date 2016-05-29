@@ -35,6 +35,9 @@ function Powerup:collide()
 			end)
 		end
 
+		local n = love.math.random(1, 2)
+		love.audio.newSource('sound/pup' .. n .. '.wav', 'static'):play()
+
 		self.used = true
 		Timer.tween(0.2, self, {color = {255, 255, 255, 0}})
 		Timer.tween(0.2, self, {radius = 100}, 'in-quad', function()

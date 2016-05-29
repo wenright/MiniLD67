@@ -42,6 +42,8 @@ function Transform:update(dt)
 end
 
 function Transform:reflect(r)
+	love.audio.newSource('sound/bounce1.wav'):play()
+
 	local v = Vector.new(self.vx, self.vy)
 	local n = Vector.new(math.cos(r), math.sin(r))
 	local u = ((v * n) / (n * n)) * n
