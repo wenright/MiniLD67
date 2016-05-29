@@ -10,10 +10,6 @@ function EntitySystem:add(e)
 end
 
 function EntitySystem:remove(e)
-	if e.body and not e.body:isDestroyed() then
-		e.body:destroy()
-	end
-
 	for key, entity in pairs(self.pool) do
 		if entity == e then
 			self.pool[key] = nil

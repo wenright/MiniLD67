@@ -124,6 +124,12 @@ function Player:newFire()
 	return fire
 end
 
+function Player:attachBall(ball)
+	self.paddle.attachedBall = ball	
+	self.paddle.sticky = true
+	ball.canCollide = false
+end
+
 function Player:draw()
 	-- Draw some fire if the player moved this frame
 	if self.fire then

@@ -86,7 +86,8 @@ function Game.spawnPlayer()
 	
 	Game.player = Instantiate(Player())
 	
-	Instantiate(Ball(Game.player.x, Game.player.y - 100, Game.player.r))
+	local ball = Instantiate(Ball(Game.player.x, Game.player.y - 100, Game.player.r))
+	Game.player:attachBall(ball)
 
 	-- Spawn some asteroids
 	for i = 1, 3 + Game.level do

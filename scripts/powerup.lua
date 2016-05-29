@@ -6,7 +6,7 @@ function Powerup:init(x, y)
 	Transform.init(self, x, y)
 
 	-- Pick random powerup type
-	self.kind = love.math.random(1, 5)
+	self.kind = love.math.random(1, 6)
 
 	self.color = {255, 255, 255, 255}
 
@@ -47,6 +47,8 @@ function Powerup:collide()
 			end)
 		elseif self.kind == 5 then
 			Game.lives = Game.lives + 1
+		elseif self.kind == 6 then
+			Game.player.paddle.sticky = true
 		end
 
 		local n = love.math.random(1, 2)
@@ -82,6 +84,8 @@ function Powerup:draw()
 		love.graphics.polygon('fill', Player.verts)
 
 		love.graphics.pop()
+	elseif self.kind == 6 then
+		love.graphics.arc('fill', self.x, self.y, 25, -math.pi, 0)
 	end
 end
 

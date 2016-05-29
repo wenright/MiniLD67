@@ -42,10 +42,8 @@ end
 function Asteroid:collide()
 	--------------------------------
 	-- Check for collision with ball
-	-- for k, ball in pairs(Game.balls.pool) do
-		-- if self.canCollide and self.worldVerts:contains(ball.x, ball.y) then
 	for shape, delta in pairs(Game.world:collisions(self.worldVerts)) do
-		if self.canCollide and shape.parent.type == 'Ball' then
+		if self.canCollide and shape.parent.type == 'Ball' and shape.parent.canCollide then
 			if self.radius == self.maxRadius then
 				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
 				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
@@ -54,7 +52,7 @@ function Asteroid:collide()
 				Game.checkForWin()
 			end
 
-			if love.math.random() > 0.5 then
+			if love.math.random() > 0.6 then
 				Instantiate(Powerup(self.x, self.y))
 			end
 
