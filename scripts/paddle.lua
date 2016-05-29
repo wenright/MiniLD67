@@ -31,6 +31,9 @@ function Paddle:collide()
 	-- Check the paddle for collisions with the ball
 	for k, ball in pairs(Game.balls.pool) do
 		if self.canHit and self.worldVerts:contains(ball.x, ball.y) then
+			local n = love.math.random(1, 4)
+			love.audio.newSource('sound/bounce' .. n .. '.wav'):play()
+
 			ball:reflect(self.r - math.pi/2)
 
 			self.canHit = false

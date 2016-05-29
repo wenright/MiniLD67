@@ -54,7 +54,7 @@ function Asteroid:collide()
 				Game.checkForWin()
 			end
 
-			if love.math.random() > 0.6 then
+			if love.math.random() > 0.5 then
 				Instantiate(Powerup(self.x, self.y))
 			end
 

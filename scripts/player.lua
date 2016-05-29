@@ -83,6 +83,10 @@ function Player:collide()
 						Game.player = Instantiate(Player())
 					else
 						Game.over = true
+
+						Timer.after(4, function()
+							Game.restart()
+						end)
 					end
 
 					sound:stop()

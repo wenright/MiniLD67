@@ -3,16 +3,7 @@ local Game = {}
 function Game:enter()
 	Game.w, Game.h = love.graphics.getDimensions()
 
-	Game.level = 1
-	Game.lives = 3
-	Game.score = 0
-	Game.scoreMultiplier = 1
-
-	Game.world = Physics.new(250)
-
-	Game.spawnPlayer()
-
-	Instantiate(Powerup())
+	Game.restart()
 end
 
 function Game:update(dt)
@@ -75,6 +66,18 @@ function Game.checkForWin()
 			Game.spawnPlayer()
 		end)
 	end
+end
+
+function Game.restart()
+	Game.over = false
+	Game.level = 1
+	Game.lives = 3
+	Game.score = 0
+	Game.scoreMultiplier = 1
+
+	Game.world = Physics.new(250)
+
+	Game.spawnPlayer()
 end
 
 function Game.spawnPlayer()

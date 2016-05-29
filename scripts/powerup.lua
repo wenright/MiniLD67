@@ -6,12 +6,7 @@ function Powerup:init(x, y)
 	Transform.init(self, x, y)
 
 	-- Pick random powerup type
-	-- Bonus ball is more common.  It's the most useful
-	if love.math.random() > 0.5 then
-		self.kind = love.math.random(2, 5)
-	else
-		self.kind = 1
-	end
+	self.kind = love.math.random(1, 5)
 
 	self.color = {255, 255, 255, 255}
 
@@ -47,7 +42,7 @@ function Powerup:collide()
 			-- Add a score multiplier for a few seconds
 			Game.scoreMultiplier = Game.scoreMultiplier * 2
 
-			Timer.after(5, function()
+			Timer.after(10, function()
 				Game.scoreMultiplier = Game.scoreMultiplier / 2
 			end)
 		elseif self.kind == 5 then
@@ -80,7 +75,7 @@ function Powerup:draw()
 		love.graphics.print('x2', self.x - 25, self.y - 25)
 	elseif self.kind == 5 then
 		love.graphics.push()
-		
+
 		love.graphics.translate(self.x, self.y)
 		love.graphics.scale(self.radius / 50)
 
