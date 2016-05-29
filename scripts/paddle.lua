@@ -1,18 +1,15 @@
 local Paddle = Class {
 	__includes = Transform,
-	type = 'Paddle',
-	verts = {
-		-80, -50,
-		-80, -60,
-		0, -60,
-		0, -50
-	}
+	type = 'Paddle'
 }
 
 function Paddle:init()
-	Transform.init(self, 0, 0, 40, 50)
+	Transform.init(self, 0, 0, 80, 20)
 
-	self.dist = 40
+	self.shape = Physics.rectangle(self.x, self.y, self.w, self.h)
+	print(self.shape)
+
+	self.dist = -50
 	self.r = 0
 
 	self.canHit = true
@@ -23,10 +20,10 @@ function Paddle:update(dt)
 	-- Update the paddle's position by copying the player's position
 	self.r = Game.player.r
 
-	local cos, sin = math.cos(self.r), math.sin(self.r)
-
-	self.x = Game.player.x + cos * self.dist
-	self.y = Game.player.y + sin * self.dist
+	local cos, sin = math.cos(self.r + math.pi/2), math.sin(self.r + math.pi/2)
+	local c = Game.player.worldVerts.centroid
+	self.shape:moveTo(c.x + self.dist * cos, c.y + self.dist * sin)
+	self.shape:setRotation(self.r)
 end
 
 function Paddle:collide()
@@ -44,7 +41,7 @@ end
 
 function Paddle:draw()
 	love.graphics.setColor(255, 255, 255)
-	love.graphics.polygon('fill', self.worldVerts:unpack())
+	self.shape:draw('fill')
 end
 
 return Paddle

@@ -6,6 +6,7 @@ Gamestate = require 'lib.hump.gamestate'
 Vector = require 'lib.hump.vector'
 
 Polygon = require 'lib.HC.polygon'
+Physics = require 'lib.HC'
 
 EntitySystem = require 'scripts.entitysystem'
 Transform = require 'scripts.transform'

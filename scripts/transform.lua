@@ -25,7 +25,7 @@ function Transform:update(dt)
 
 		local x1, y1, x2, y2 = self.worldVerts:bbox()
 
-		-- TODO move accorss a little less so less teleporting
+		-- TODO move accross a little less so less teleporting
 		if x2 < -Game.w / 2 then
 			self.worldVerts:move(Game.w, 0)
 		elseif x1 > Game.w / 2 then

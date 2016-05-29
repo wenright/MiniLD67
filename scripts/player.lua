@@ -15,6 +15,7 @@ function Player:init()
 	Transform.init(self, 0, 0, 40, 50)
 
 	self.r = 0
+	self.dr = 0
 
 	self.paddle = Instantiate(Paddle())
 end
@@ -25,15 +26,18 @@ function Player:update(dt)
 	Transform.update(self, dt)
 
 	self.r = self.worldVerts.r
+	self.dr = 0
 
 	-----------------------------------------------------------
 	-- Take input from keyboard and apply a rotation or a force
 	if love.keyboard.isDown('a', 'left') then
-		self.worldVerts:rotate(-self.rotationSpeed * dt)
+		self.dr = -self.rotationSpeed * dt
 	end
 	if love.keyboard.isDown('d', 'right') then
-		self.worldVerts:rotate(self.rotationSpeed * dt)
+		self.dr = self.rotationSpeed * dt
 	end
+
+	self.worldVerts:rotate(self.dr)
 
 	if love.keyboard.isDown('w', 'up') then
 		self:applyForce(math.cos(self.r - math.pi/2) * self.acceleration * dt, math.sin(self.r - math.pi/2) * self.acceleration * dt)
@@ -56,7 +60,6 @@ function Player:draw()
 	love.graphics.polygon('fill', self.worldVerts:unpack())
 
 	love.graphics.setColor(255, 255, 255)
-
 	love.graphics.polygon('line', self.worldVerts:unpack())
 end
 
