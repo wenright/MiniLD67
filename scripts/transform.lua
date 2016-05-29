@@ -27,15 +27,15 @@ function Transform:update(dt)
 
 	-- TODO move accross a little less so less teleporting
 	if x2 < -Game.w / 2 then
-		self.worldVerts:move(Game.w, 0)
+		self.worldVerts:move(Game.w + self.w, 0)
 	elseif x1 > Game.w / 2 then
-		self.worldVerts:move(-Game.w, 0)
+		self.worldVerts:move(-Game.w - self.w, 0)
 	end
 
 	if y2 < -Game.h / 2 then
-		self.worldVerts:move(0, Game.h)
+		self.worldVerts:move(0, Game.h + self.h or self.w)
 	elseif y1 > Game.h / 2 then
-		self.worldVerts:move(0, -Game.h)
+		self.worldVerts:move(0, -Game.h - self.h or self.w)
 	end
 
 	self.x, self.y = self.worldVerts:center()
