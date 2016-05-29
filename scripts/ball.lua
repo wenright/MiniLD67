@@ -10,6 +10,8 @@ function Ball:init(x, y, r)
 
 	Transform.init(self, x, y)
 
+	self.size = 4
+
 	self:applyForce(math.cos(r) * self.speed, math.sin(r) * self.speed)
 end
 
@@ -22,7 +24,7 @@ function Ball:collide()
 end
 
 function Ball:draw()
-	love.graphics.setPointSize(4)
+	love.graphics.setPointSize(self.size)
 
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.points(self.x, self.y)

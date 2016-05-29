@@ -2,7 +2,7 @@ local Particles = Class {}
 
 function Particles:init(x, y)
 	self.system = EntitySystem()
-	for i = 1, 10 do
+	for i = 1, love.math.random(9, 13) do
 		self.system:add(Particle(x, y))
 	end
 

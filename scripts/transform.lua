@@ -63,6 +63,11 @@ function Transform:reflect(r)
 	local u = ((v * n) / (n * n)) * n
 	local w = v - u
 	self.vx, self.vy = (w - u):unpack()
+
+	if self.type == 'Ball' then
+		self.size = 10
+		Timer.tween(1, self, {size = 4}, 'in-bounce')
+	end
 end
 
 return Transform
