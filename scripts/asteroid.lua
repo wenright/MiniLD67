@@ -57,9 +57,7 @@ function Asteroid:collide()
 					end
 				end
 
-				print('left: ' .. count)
-
-				if count == 0 then
+				if count == 1 then
 					print('Game over')
 				end
 			end
