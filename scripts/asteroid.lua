@@ -62,7 +62,7 @@ function Asteroid:collide()
 				end
 			end
 
-			if love.math.random() > 0.92 then
+			if love.math.random() > 0 then
 				Instantiate(Powerup(self.x, self.y))
 			end
 

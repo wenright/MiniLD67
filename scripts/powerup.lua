@@ -7,7 +7,7 @@ function Powerup:init(x, y)
 	Transform.init(self, x, y)
 
 	-- TODO pick random powerup type
-	self.kind = love.math.random(1, 1)
+	self.kind = love.math.random(1, 2)
 
 	self.color = {255, 255, 255, 255}
 
@@ -30,7 +30,10 @@ function Powerup:collide()
 		if self.kind == 1 then
 			Instantiate(Ball(self.x, self.y, love.math.random() * math.pi * 4 - math.pi * 2))
 		elseif self.kind == 2 then
-			-- Score bonus? bigger paddle?
+			Game.player.paddle.shape:scale(1.5)
+			Timer.after(5, function()
+				Game.player.paddle.shape:scale(0.75)
+			end)
 		end
 
 		self.used = true
@@ -48,6 +51,8 @@ function Powerup:draw()
 
 	if self.kind == 1 then
 		love.graphics.circle('fill', self.x, self.y, self.radius / 10)
+	elseif self.kind == 2 then
+		love.graphics.rectangle('fill', self.x - self.radius/2, self.y - self.radius / 5, self.radius, self.radius/2)
 	end
 end
 
