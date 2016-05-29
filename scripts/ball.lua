@@ -15,7 +15,7 @@ function Ball:init(x, y, r)
 	self.worldVerts = Game.world:circle(self.x, self.y, self.size)
 	self.worldVerts.parent = self
 
-	self.canCollide = true
+	self.stuck = false
 end
 
 function Ball:update(dt)

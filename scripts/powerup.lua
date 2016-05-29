@@ -22,6 +22,12 @@ function Powerup:init(x, y)
 		end
 		grow()
 	end)
+
+	Timer.after(5, function()
+		Timer.tween(1, self, {color = {255, 255, 255, 0}}, 'out-quad', function()
+			Game.objects:remove(self)
+		end)
+	end)
 end
 
 function Powerup:collide()

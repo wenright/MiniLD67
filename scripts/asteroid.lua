@@ -43,7 +43,7 @@ function Asteroid:collide()
 	--------------------------------
 	-- Check for collision with ball
 	for shape, delta in pairs(Game.world:collisions(self.worldVerts)) do
-		if self.canCollide and shape.parent.type == 'Ball' and shape.parent.canCollide then
+		if self.canCollide and shape.parent.type == 'Ball' and not shape.parent.stuck then
 			if self.radius == self.maxRadius then
 				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
 				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
@@ -64,7 +64,7 @@ function Asteroid:collide()
 			Instantiate(Particles(self.x, self.y))
 
 			-- Play a random explosion sound
-			local n = love.math.random(1, 3)
+			local n = love.math.random(1, 5)
 			love.audio.newSource('sound/astr' .. n .. '.wav', 'static'):play()
 
 			Game.objects:remove(self)

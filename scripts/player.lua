@@ -127,7 +127,7 @@ end
 function Player:attachBall(ball)
 	self.paddle.attachedBall = ball	
 	self.paddle.sticky = true
-	ball.canCollide = false
+	ball.stuck = true
 end
 
 function Player:draw()

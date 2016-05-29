@@ -38,8 +38,8 @@ function Paddle:update(dt)
 			self.attachedBall.vx = 0
 			self.attachedBall.vy = 0
 			
-			self.attachedBall:applyForce(-Ball.speed * cos, -Ball.speed * sin)
-			self.attachedBall.canCollide = true
+			self.attachedBall:applyForce(-Ball.speed * cos + Game.player.vx, -Ball.speed * sin + Game.player.vy)
+			self.attachedBall.stuck = false
 			self.attachedBall = nil
 		end
 	end
@@ -57,7 +57,7 @@ function Paddle:collide()
 
 			if self.sticky then
 				self.attachedBall = ball
-				ball.canCollide = false
+				ball.stuck = true
 			else
 				ball:reflect(self.r - math.pi/2)
 

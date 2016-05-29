@@ -22,23 +22,25 @@ end
 
 function Transform:update(dt)
 	self.worldVerts:move(self.vx * dt, self.vy * dt)
+	self.x, self.y = self.worldVerts:center()
 
 	local x1, y1, x2, y2 = self.worldVerts:bbox()
 
 	-- TODO move accross a little less so less teleporting
-	if x2 < -Game.w / 2 then
-		self.worldVerts:move(Game.w + self.w, 0)
-	elseif x1 > Game.w / 2 then
-		self.worldVerts:move(-Game.w - self.w, 0)
-	end
+	if not self.stuck then
+		if x2 < -Game.w / 2 then
+			self.worldVerts:move(Game.w + self.w, 0)
+		elseif x1 > Game.w / 2 then
+			self.worldVerts:move(-Game.w - self.w, 0)
+		end
 
-	if y2 < -Game.h / 2 then
-		self.worldVerts:move(0, Game.h + self.h or self.w)
-	elseif y1 > Game.h / 2 then
-		self.worldVerts:move(0, -Game.h - self.h or self.w)
-	end
+		if y2 < -Game.h / 2 then
+			self.worldVerts:move(0, Game.h + self.h or self.w)
+		elseif y1 > Game.h / 2 then
+			self.worldVerts:move(0, -Game.h - self.h or self.w)
+		end
 
-	self.x, self.y = self.worldVerts:center()
+	end
 end
 
 function Transform:reflect(r)
