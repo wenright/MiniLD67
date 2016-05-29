@@ -3,6 +3,8 @@ local Game = {}
 function Game:enter()
 	Game.w, Game.h = love.graphics.getDimensions()
 
+	Game.world = Physics.new(250)
+
 	Game.objects = EntitySystem()
 	Game.balls = EntitySystem()
 

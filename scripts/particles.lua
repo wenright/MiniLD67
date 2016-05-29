@@ -1,4 +1,6 @@
-local Particles = Class {}
+local Particles = Class {
+	type = 'Particles'
+}
 
 function Particles:init(x, y)
 	self.system = EntitySystem()

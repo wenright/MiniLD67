@@ -6,7 +6,6 @@ local Asteroid = Class {
 }
 
 function Asteroid:init(x, y, radius)
-	-- TODO generate asteroid
 	local x = x or love.math.random(-Game.w/2, Game.w/2)
 	local y = y or love.math.random(-Game.h/2, Game.h/2)
 
@@ -43,13 +42,16 @@ end
 function Asteroid:collide()
 	--------------------------------
 	-- Check for collision with ball
-	for k, ball in pairs(Game.balls.pool) do
-		if self.canCollide and self.worldVerts:contains(ball.x, ball.y) then
+	-- for k, ball in pairs(Game.balls.pool) do
+		-- if self.canCollide and self.worldVerts:contains(ball.x, ball.y) then
+	for shape, delta in pairs(Game.world:collisions(self.worldVerts)) do
+		if self.canCollide and shape.parent.type == 'Ball' then
 			if self.radius == self.maxRadius then
 				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
 				Instantiate(Asteroid(self.x, self.y, self.radius / 2))
 			else
 				-- If the last one has been destroyed, end this game/level
+				-- TODO move to new function
 				local count = 0
 				for k, obj in pairs(Game.objects.pool) do
 					if obj.type == 'Asteroid' then
@@ -62,11 +64,11 @@ function Asteroid:collide()
 				end
 			end
 
-			if love.math.random() > 0 then
+			if love.math.random() > 0.9 then
 				Instantiate(Powerup(self.x, self.y))
 			end
 
-			ball:reflect(self.r - math.pi/2)
+			shape.parent:reflect(self.r - math.pi/2)
 
 			-- TODO add to score
 
@@ -79,10 +81,10 @@ end
 
 function Asteroid:draw()
 	love.graphics.setColor(0, 0, 0)
-	love.graphics.polygon('fill', self.worldVerts:unpack())
+	self.worldVerts:draw('fill')
 
 	love.graphics.setColor(255, 255, 255)
-	love.graphics.polygon('line', self.worldVerts:unpack())
+	self.worldVerts:draw('line')
 end
 
 return Asteroid

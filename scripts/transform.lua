@@ -10,7 +10,8 @@ function Transform:init(x, y, w, h)
 	self.vx, self.vy = 0, 0
 
 	if self.verts then
-		self.worldVerts = Polygon(unpack(self.verts))
+		self.worldVerts = Game.world:polygon(unpack(self.verts))
+		self.worldVerts.parent = self
 	end
 end
 
@@ -20,41 +21,24 @@ function Transform:applyForce(dx, dy)
 end
 
 function Transform:update(dt)
-	if self.worldVerts then
-		self.worldVerts:move(self.vx * dt, self.vy * dt)
+	self.worldVerts:move(self.vx * dt, self.vy * dt)
 
-		local x1, y1, x2, y2 = self.worldVerts:bbox()
+	local x1, y1, x2, y2 = self.worldVerts:bbox()
 
-		-- TODO move accross a little less so less teleporting
-		if x2 < -Game.w / 2 then
-			self.worldVerts:move(Game.w, 0)
-		elseif x1 > Game.w / 2 then
-			self.worldVerts:move(-Game.w, 0)
-		end
-
-		if y2 < -Game.h / 2 then
-			self.worldVerts:move(0, Game.h)
-		elseif y1 > Game.h / 2 then
-			self.worldVerts:move(0, -Game.h)
-		end
-
-		self.x, self.y = self.worldVerts.centroid.x, self.worldVerts.centroid.y
-	else
-		self.x = self.x + self.vx * dt
-		self.y = self.y + self.vy * dt
-
-		if self.x + self.w < -Game.w / 2 then
-			self.x = Game.w / 2
-		elseif self.x > Game.w / 2 then
-			self.x = -Game.w / 2
-		end
-
-		if self.y + self.h < -Game.h / 2 then
-			self.y = Game.h / 2
-		elseif self.y > Game.h / 2 then
-			self.y = -Game.h / 2
-		end
+	-- TODO move accross a little less so less teleporting
+	if x2 < -Game.w / 2 then
+		self.worldVerts:move(Game.w, 0)
+	elseif x1 > Game.w / 2 then
+		self.worldVerts:move(-Game.w, 0)
 	end
+
+	if y2 < -Game.h / 2 then
+		self.worldVerts:move(0, Game.h)
+	elseif y1 > Game.h / 2 then
+		self.worldVerts:move(0, -Game.h)
+	end
+
+	self.x, self.y = self.worldVerts:center()
 end
 
 function Transform:reflect(r)
@@ -65,8 +49,12 @@ function Transform:reflect(r)
 	self.vx, self.vy = (w - u):unpack()
 
 	if self.type == 'Ball' then
+		if self.timer then
+			Timer.cancel(self.timer)
+		end
+
 		self.size = 10
-		Timer.tween(1, self, {size = 4}, 'in-bounce', function() self.size = 4 end)
+		self.timer = Timer.tween(1, self, {size = 4}, 'in-bounce')
 	end
 end
 

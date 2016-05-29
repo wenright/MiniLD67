@@ -17,6 +17,22 @@ function Player:init()
 	self.r = 0
 	self.dr = 0
 
+	self.color = {255, 255, 255}
+
+	self.invincible = true
+	local handler = Timer.every(0.5, function()
+		self.color = {255, 255, 255, 0}
+
+		Timer.after(0.25, function()
+			self.color = {255, 255, 255, 255}
+		end)
+	end)
+
+	Timer.after(3, function()
+		self.invincible = false
+		Timer.cancel(handler)
+	end)
+
 	self.paddle = Instantiate(Paddle())
 end
 
@@ -25,7 +41,6 @@ function Player:update(dt)
 	-- Update the position using the player's velocity
 	Transform.update(self, dt)
 
-	self.r = self.worldVerts.r
 	self.dr = 0
 
 	-----------------------------------------------------------
@@ -37,6 +52,7 @@ function Player:update(dt)
 		self.dr = self.rotationSpeed * dt
 	end
 
+	self.r = self.r + self.dr
 	self.worldVerts:rotate(self.dr)
 
 	if love.keyboard.isDown('w', 'up') then
@@ -47,22 +63,24 @@ end
 function Player:collide()
 	--------------------------------
 	-- Check for collision with ball
-	for k, ball in pairs(Game.balls.pool) do
-		if self.worldVerts:contains(ball.x, ball.y) then
-			Instantiate(Particles(self.x, self.y))
+	if not self.invincible then
+		for k, ball in pairs(Game.balls.pool) do
+			if self.worldVerts:contains(ball.x, ball.y) then
+				Instantiate(Particles(self.x, self.y))
 
-			Game.objects:remove(self.paddle)
-			Game.objects:remove(self)
+				Game.objects:remove(self.paddle)
+				Game.objects:remove(self)
+			end
 		end
 	end
 end
 
 function Player:draw()
 	love.graphics.setColor(0, 0, 0)
-	love.graphics.polygon('fill', self.worldVerts:unpack())
+	self.worldVerts:draw('fill')
 
-	love.graphics.setColor(255, 255, 255)
-	love.graphics.polygon('line', self.worldVerts:unpack())
+	love.graphics.setColor(self.color)
+	self.worldVerts:draw('line')
 end
 
 return Player

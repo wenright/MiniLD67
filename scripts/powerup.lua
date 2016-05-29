@@ -1,5 +1,4 @@
 local Powerup = Class {
-	__includes = Transform,
 	type = 'Powerup'
 }
 
@@ -30,9 +29,9 @@ function Powerup:collide()
 		if self.kind == 1 then
 			Instantiate(Ball(self.x, self.y, love.math.random() * math.pi * 4 - math.pi * 2))
 		elseif self.kind == 2 then
-			Game.player.paddle.shape:scale(1.5)
-			Timer.after(5, function()
-				Game.player.paddle.shape:scale(0.75)
+			Game.player.paddle.worldVerts:scale(1.5)
+			Timer.after(10, function()
+				Game.player.paddle.worldVerts:scale(0.75)
 			end)
 		end
 
