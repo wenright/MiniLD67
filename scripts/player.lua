@@ -74,6 +74,15 @@ function Player:collide()
 			if self.worldVerts:contains(ball.x, ball.y) then
 				Instantiate(Particles(self.x, self.y))
 
+				Timer.after(1, function()
+					if Game.lives > 0 then
+						Game.lives = Game.lives - 1
+						Game.player = Instantiate(Player())
+					else
+						Game.over = true
+					end
+				end)
+
 				Game.objects:remove(self.paddle)
 				Game.objects:remove(self)
 			end
